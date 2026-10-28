@@ -1,0 +1,709 @@
+{
+  "name": "ShopMind - RAG Ingestion",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        176
+      ],
+      "id": "789fd142-51a3-474e-b0f3-62ffde33479e",
+      "name": "n8n-nodes-base.manualTrigger"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/data/shopmind/knowledge_base/raw-corpus/*.csv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        -176,
+        176
+      ],
+      "id": "0498cebb-c378-4b86-b27b-53e11383b37b",
+      "name": "Read/Write Files from Disk2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "smartphones",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "47174ab8-2981-4723-bf09-5e3c730fc4a3"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "smartphones"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2c0f31a0-4b0b-41cc-a4ab-4eb083eb5fdd",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "laptops",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "laptops"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "74aee1b0-d5f0-47cd-b80f-0c6e51410118",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "television",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "television"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "42c04203-750b-4cae-a985-c1a8d4da9336",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "headphone",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "headphone"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "559e5d6c-bc6d-4876-9f4e-ad9e59c8c818",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "watch",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "watch"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "05cc7e61-6ebf-413b-9a34-c0a2c8344e41",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "electronics_product",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "electronics_product"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1949ea36-3540-449b-be6d-dc4a73bf21f9",
+                    "leftValue": "={{ $binary.data.fileName.toLowerCase() }}",
+                    "rightValue": "amazon_all",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "amazon_all"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        96
+      ],
+      "id": "0b5ccd6f-01b3-4e72-908e-d02548e587a9",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        -96
+      ],
+      "id": "e3263171-d526-416a-ba1d-0e875126855e",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizeKeys(row) {\n  const out = {};\n  for (const k in row) out[k.replace(/^\\uFEFF/, '').trim()] = row[k];\n  return out;\n}\nconst FX_INR_TO_TND = 0.0378;\nconst parsePrice = (raw) => {\n  if (raw == null) return null;\n  const n = parseFloat(String(raw).replace(/[₹$,]/g, '').trim());\n  return isNaN(n) ? null : n;\n};\nconst toTND = (v) => v == null ? null : +(v * FX_INR_TO_TND).toFixed(2);\n\nreturn $input.all().map(item => {\n  const row = item.json;\n  const price_tnd = toTND(parsePrice(row.price));\n  const pageContent = `Smartphone: ${row.brand_name} ${row.model}\nReleased ${row.release_year}, runs ${row.operating_system}.\nDisplay: ${row.screen_size}\" screen, ${row.refresh_rate}Hz refresh rate.\nPerformance: ${row.chipset} chipset with ${row.gpu}, ${row.ram}GB RAM, ${row.storage}GB storage.\nCamera: ${row.camera_mp}MP rear / ${row.front_camera_mp}MP front.\nBattery: ${row.battery_capacity}mAh, fast charging ${row.fast_charging}W.\nConnectivity: ${row.network_support}, Bluetooth ${row.bluetooth_version}, ${row.wifi_version}, ${row.usb_type}.\nBody: ${row.body_material}, ${row.weight}g, ${row.thickness}mm, fingerprint sensor: ${row.fingerprint_sensor}.\nPrice: ${price_tnd} TND.`;\n\n  return {\n    json: {\n      pageContent,\n      metadata: {\n        category: 'smartphone',\n        brand: row.brand_name,\n        model: row.model,\n        price_tnd,\n        source_dataset: 'smartphones.csv',\n        source_id: String(row.id)\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -192
+      ],
+      "id": "ecf9dd1e-3028-4e24-ad7e-81c0fa7902bf",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        16
+      ],
+      "id": "be6f0478-e4b6-4f74-a048-d75e57e13ae1",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizeKeys(row) {\n  const out = {};\n  for (const k in row) out[k.replace(/^\\uFEFF/, '').trim()] = row[k];\n  return out;\n}\nconst parsePrice = (raw) => {\n  if (raw == null) return null;\n  const n = parseFloat(String(raw).replace(/[₹$,]/g, '').trim());\n  return isNaN(n) ? null : n;\n};\nconst toTND = (v) => v == null ? null : +(v * 0.0378).toFixed(2);\n\nreturn $input.all().map((item, idx) => {\n  const row = item.json;\n  const price_tnd = toTND(parsePrice(row.Price));\n  const pageContent = `Laptop: ${row.Company} ${row.TypeName}\nScreen: ${row.Inches}\" - ${row.ScreenResolution}.\nCPU: ${row.Cpu}. RAM: ${row.Ram}. Storage: ${row.Memory}.\nGPU: ${row.Gpu}. OS: ${row.OpSys}. Weight: ${row.Weight}.\nPrice: ${price_tnd} TND.`;\n\n  return {\n    json: {\n      pageContent,\n      metadata: {\n        category: 'laptop',\n        brand: row.Company,\n        model: row.TypeName,\n        price_tnd,\n        source_dataset: 'laptops.csv',\n        source_id: `laptop_${idx}`\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        16
+      ],
+      "id": "b6f0dcdd-a19b-4ced-bb16-02de04f1a250",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        144
+      ],
+      "id": "d1371d27-b9f9-460a-a637-71702ef06f24",
+      "name": "Extract from File2"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizeKeys(row) {\n  const out = {};\n  for (const k in row) out[k.replace(/^\\uFEFF/, '').trim()] = row[k];\n  return out;\n}\nconst parsePrice = (raw) => {\n  if (raw == null) return null;\n  const n = parseFloat(String(raw).replace(/[₹$,]/g, '').trim());\n  return isNaN(n) ? null : n;\n};\nconst toTND = (v) => v == null ? null : +(v * 0.0378).toFixed(2);\n\nreturn $input.all().map((item, idx) => {\n  const row = item.json;\n  const price_tnd = toTND(parsePrice(row.current_price));\n  const pageContent = `TV: ${row.Product_Name}\nRating: ${row.Stars} stars (${row.Ratings} ratings, ${row.Reviews} reviews).\nResolution/channels: ${row.channel}.\nOperating system: ${row.Operating_system}.\nPicture quality: ${row.Picture_qualtiy}.\nSpeaker: ${row.Speaker}.\nPorts/Frequency: ${row.Frequency}.\nPrice: ${price_tnd} TND (MRP ${toTND(parsePrice(row.MRP))} TND).`;\n\n  return {\n    json: {\n      pageContent,\n      metadata: {\n        category: 'tv',\n        brand: row.Product_Name ? row.Product_Name.split(' ')[0] : null,\n        price_tnd,\n        source_dataset: 'TELEVISION.csv',\n        source_id: `tv_${idx}`\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        144
+      ],
+      "id": "b8b0f595-8177-4eae-a4b0-996bb3700062",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        272
+      ],
+      "id": "3d7014b5-a185-4b7f-b420-7c8ae03870b2",
+      "name": "Extract from File3"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizeKeys(row) {\n  const out = {};\n  for (const k in row) out[k.replace(/^\\uFEFF/, '').trim()] = row[k];\n  return out;\n}\nconst parsePrice = (raw) => {\n  if (raw == null) return null;\n  const n = parseFloat(String(raw).replace(/[₹$,]/g, '').trim());\n  return isNaN(n) ? null : n;\n};\nconst toTND = (v) => v == null ? null : +(v * 0.0378).toFixed(2);\n\nreturn $input.all().map((item, idx) => {\n  const row = item.json;\n  const price_tnd = toTND(parsePrice(row.Selling_Price));\n  const pageContent = `Headphone: ${row.Title}\nBrand: ${row.Brand}, Model: ${row.Model}, Colour: ${row.Colour}.\nForm factor: ${row.Form_Factor}. Connectivity: ${row.Connectivity_Type}.\nPrice: ${price_tnd} TND (original ${toTND(parsePrice(row.Actual_Price))} TND).`;\n\n  return {\n    json: {\n      pageContent,\n      metadata: {\n        category: 'accessory',\n        brand: row.Brand,\n        model: row.Model,\n        price_tnd,\n        source_dataset: 'headphones.csv',\n        source_id: `headphone_${idx}`\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        272
+      ],
+      "id": "2635c45e-e1df-487d-be9c-50c7de964b74",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        416
+      ],
+      "id": "0cb3b9b4-85ee-49b9-83f1-1035fc3c42d5",
+      "name": "Extract from File4"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizeKeys(row) {\n  const out = {};\n  for (const k in row) out[k.replace(/^\\uFEFF/, '').trim()] = row[k];\n  return out;\n}\nconst parsePrice = (raw) => {\n  if (raw == null) return null;\n  const n = parseFloat(String(raw).replace(/[₹$,]/g, '').trim());\n  return isNaN(n) ? null : n;\n};\nconst toTND = (v) => v == null ? null : +(v * 3.10).toFixed(2); // USD source\n\nreturn $input.all().map((item, idx) => {\n  const row = item.json;\n  const price_tnd = toTND(parsePrice(row['Price (USD)']));\n  const pageContent = `Smartwatch: ${row.Brand} ${row.Model}\nOS: ${row['Operating System']}. Connectivity: ${row.Connectivity}.\nDisplay: ${row['Display Type']}, ${row['Display Size (inches)']}\", ${row.Resolution}.\nWater resistance: ${row['Water Resistance (meters)']}m. Battery life: ${row['Battery Life (days)']} days.\nHeart rate monitor: ${row['Heart Rate Monitor']}, GPS: ${row.GPS}, NFC: ${row.NFC}.\nPrice: ${price_tnd} TND.`;\n\n  return {\n    json: {\n      pageContent,\n      metadata: {\n        category: 'accessory',\n        brand: row.Brand,\n        model: row.Model,\n        price_tnd,\n        source_dataset: 'smartwatches.csv',\n        source_id: `watch_${idx}`\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        416
+      ],
+      "id": "6ba2bbba-de02-40c9-bb0f-1a66ecc2da07",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1344,
+        -128
+      ],
+      "id": "04e1fe74-15d3-414d-a3ac-17c60f18f5ac",
+      "name": "Merge"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1616,
+        176
+      ],
+      "id": "8fb013c0-2519-491d-bd9d-3c2884709b34",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qpNBycG0Aaq4tAGv",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "=shopmind_products",
+          "mode": "id"
+        },
+        "embeddingBatchSize": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        2000,
+        -176
+      ],
+      "id": "d134e64c-f237-4172-9bde-fc1802e1c95c",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "qrrg8kOiuXutUDL7",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.pageContent }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "metadata",
+                "value": "={{ $json.metadata }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1968,
+        176
+      ],
+      "id": "c49ce9d9-da39-47ab-af8c-d64151992d44",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "batchSize": 200,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1616,
+        -240
+      ],
+      "id": "d10289f7-7d62-41cb-a184-1b2bc7aeca41",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1824,
+        80
+      ],
+      "id": "f7262a41-65e6-4193-82e9-cbd5c53a4b60",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "ouxmPeOKf0onIHGY",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "n8n-nodes-base.manualTrigger": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk2": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File4": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f5387fd9-dd37-4309-840e-96ede5ded73d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "be88066e88dc085ed23a629c74950bf219305c5f79524bfd459e00414572517e"
+  },
+  "nodeGroups": [],
+  "id": "uG1ocWvYI3SkmvwF",
+  "tags": []
+}
